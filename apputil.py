@@ -32,7 +32,8 @@ def show_game(game_board, n_steps=10, pause=0.5):
         game_board = update_board(game_board)
 
         # show board
-        sns.heatmap(game_board, cmap='plasma', cbar=False, square=True)
+        sns.heatmap(game_board, cmap='tab20c_r', 
+                    cbar=False, square=True, linewidths=1)
         plt.title(f'Board State at Step {step + 1}')
         plt.show()
 
