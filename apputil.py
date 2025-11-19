@@ -6,10 +6,22 @@ import matplotlib.pyplot as plt
 
 
 def update_board(current_board):
-    # your code here ...
-    updated_board = current_board
+    """Return the next Game of Life board state for a binary matrix."""
+    board = np.asarray(current_board, dtype=int)
 
-    return updated_board
+    # Pad with dead cells so edge counts do not wrap around.
+    padded = np.pad(board, pad_width=1, mode='constant')
+    neighbor_count = (
+        padded[:-2, :-2] + padded[:-2, 1:-1] + padded[:-2, 2:]
+        + padded[1:-1, :-2] + padded[1:-1, 2:]
+        + padded[2:, :-2] + padded[2:, 1:-1] + padded[2:, 2:]
+    )
+
+    next_board = np.zeros_like(board, dtype=int)
+    next_board[(board == 1) & ((neighbor_count == 2) | (neighbor_count == 3))] = 1
+    next_board[(board == 0) & (neighbor_count == 3)] = 1
+
+    return next_board
 
 
 def show_game(game_board, n_steps=10, pause=0.5):
